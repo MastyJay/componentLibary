@@ -1,14 +1,14 @@
-import {
-  queryCurrent,
-} from '@/services/userInfoAPI';
+import queryCurrent from '@/services/userInfoAPI';
 import { message } from 'antd';
+
+const defaultState = {
+  currentUser: {},
+}
 
 export default {
   namespace: 'userInfo',
 
-  state: {
-    currentUser: {},
-  },
+  state: defaultState,
   effects: {
     *fetchCurrent(_, { call, put }) {
       const response = yield call(queryCurrent);
@@ -17,6 +17,7 @@ export default {
           type: 'saveCurrentUser',
           payload: {},
         });
+        message.error(response.Message);
       } else {
         yield put({
           type: 'saveCurrentUser',
@@ -33,5 +34,8 @@ export default {
         currentUser: action.payload,
       };
     },
+    clear() {
+      return defaultState;
+    }
   },
 };

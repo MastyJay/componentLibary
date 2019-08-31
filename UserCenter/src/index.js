@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'dva';
 import styles from './index.css';
 import Text from '@/components/Text';
 
-export default function() {
-  return (
-    <div className={styles.normal}>
-      <h1>I am a umi block!</h1>
-      <Text text="啦啦啦啦" />
-    </div>
-  );
+@connect(({ userInfo }) => ({
+  userInfo
+}))
+class UserCenter extends Component {
+
+  render() {
+    const { userInfo = { name='mastyjay' } } = this.props;
+    return (
+      <div className={styles.normal} >
+        <h1>I am a umi block!</h1>
+        <Text text="啦啦啦啦" />
+        <Text text={userInfo.name} />
+      </div>
+    );
+  }
 }
+
+export default UserCenter;
